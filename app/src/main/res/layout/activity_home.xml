@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:map="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/constraint_layout_home"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".HomeActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/home_page_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@drawable/bg_custom_action_bar"
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="90dp"
+            android:orientation="horizontal"
+            android:background="@drawable/bg_custom_action_bar"
+            android:gravity="center">
+
+            <ImageButton
+                android:id="@+id/back_arrow_home_page"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:src="@drawable/ic_back_arrow"
+                android:contentDescription="@string/back_arrow_description"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/halaman_beranda"
+                android:fontFamily="@font/roboto_black"
+                android:textSize="18sp"
+                android:textColor="@color/purple_tersier"
+                android:paddingStart="85dp"
+                android:paddingEnd="85dp"
+                />
+
+        </LinearLayout>
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <LinearLayout
+        android:id="@+id/monitoring_field"
+        android:layout_width="250dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="120dp"
+        android:background="@drawable/bg_textview_monitoring_field_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/first_text_monitoring"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="-35dp"
+            android:text="@string/monitoring_field"
+            android:textColor="@color/purple_secondary"
+            android:fontFamily="@font/roboto_black"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/fall_detection"
+            android:textColor="@color/purple_secondary"
+            android:fontFamily="@font/roboto_bold_italic"/>
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/patient_condition_field"
+        android:layout_width="350dp"
+        android:layout_height="120dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/monitoring_field"
+        android:background="@drawable/bg_monitoring_field"
+        android:layout_marginTop="-400dp"
+        android:gravity="center"
+        android:paddingTop="20dp"
+        android:paddingBottom="20dp">
+
+        <TextView
+            android:id="@+id/username_home"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto_medium"
+            android:text="@string/nama_wali"
+            android:textColor="@android:color/black"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/patient_name_home"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/nama_pasien"
+            android:textColor="@android:color/black"
+            android:textSize="14sp"
+            android:fontFamily="@font/roboto_medium"
+            android:layout_below="@id/username_home"
+            android:layout_marginTop="20dp"/>
+
+        <TextView
+            android:id="@+id/patient_condition_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/kondisi_pasien"
+            android:textColor="@android:color/black"
+            android:textSize="16sp"
+            android:fontFamily="@font/roboto_black"
+            android:layout_below="@id/patient_name_home"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/lokasi_pengguna_map"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="-120dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/patient_condition_field"
+        >
+
+        <TextView
+            android:id="@+id/patient_address_home"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/lokasi_pengguna"
+            android:textColor="@android:color/black"
+            android:textSize="16sp"
+            android:fontFamily="@font/roboto_black"/>
+
+        <org.osmdroid.views.MapView
+            android:id="@+id/map"
+            android:layout_width="280dp"
+            android:layout_height="250dp"
+            android:layout_below="@id/patient_address_home" />
+
+        <TextView
+            android:id="@+id/patient_address_home_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/map"
+            android:fontFamily="@font/roboto_medium"
+            android:text="@string/alamat_pengguna"
+            android:textColor="@android:color/black"
+            android:textSize="14sp" />
+
+
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/emergency_call"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingStart="15dp"
+        android:paddingEnd="15dp"
+        android:layout_marginTop="-70dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/lokasi_pengguna_map"
+        android:text="@string/telepon_darurat_text"
+        android:textAllCaps="false"
+        android:textColor="@color/purple_tersier"
+        android:fontFamily="@font/roboto_bold"
+        android:background="@drawable/bg_button_emergency_call"/>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

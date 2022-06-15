@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/constraint_layout_register"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Register">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/register_page_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@drawable/bg_custom_action_bar"
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="90dp"
+            android:orientation="horizontal"
+            android:background="@drawable/bg_custom_action_bar"
+            android:gravity="center">
+
+            <ImageButton
+                android:id="@+id/back_arrow_register_page"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:src="@drawable/ic_back_arrow"
+                android:contentDescription="@string/back_arrow_description"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/register_text"
+                android:fontFamily="@font/roboto_black"
+                android:textSize="25sp"
+                android:textColor="@color/purple_tersier"
+                android:paddingStart="75dp"
+                android:paddingEnd="75dp"
+                />
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="35dp"
+                android:layout_marginEnd="35dp"/>
+
+        </LinearLayout>
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="40dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/register_page_toolbar"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <RelativeLayout
+            android:id="@+id/input_register_relative_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginTop="50dp">
+
+            <!--User Name-->
+            <TextView
+                android:id="@+id/username_register_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/username_register"
+                android:textColor="@color/black"
+                android:textStyle="bold"/>
+
+            <EditText
+                android:autofillHints="name"
+                android:id="@+id/username_register_edt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:hint="@string/username_login"
+                android:layout_below="@id/username_register_tv"/>
+
+            <!--Error message-->
+            <TextView
+                android:id="@+id/username_register_error_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/error_warning"
+                android:visibility="gone"
+                android:layout_below="@id/username_register_edt"/>
+
+            <!--Patient Name-->
+            <TextView
+                android:id="@+id/patient_name_register_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/patient_name_register"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:layout_below="@id/username_register_edt"
+                android:layout_marginTop="20dp"/>
+
+            <EditText
+                android:autofillHints="name"
+                android:id="@+id/patient_name_register_edt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:hint="@string/patient_name_register"
+                android:layout_below="@id/patient_name_register_tv"/>
+
+            <!--Error message-->
+            <TextView
+                android:id="@+id/patient_name_register_error_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/error_warning"
+                android:visibility="gone"
+                android:layout_below="@id/patient_name_register_edt" />
+
+            <!--Street Address-->
+            <TextView
+                android:id="@+id/street_register_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/street_address_text"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:layout_marginTop="20dp"
+                android:layout_below="@id/patient_name_register_edt"/>
+
+            <EditText
+                android:autofillHints="postalAddress"
+                android:id="@+id/street_register_edt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:hint="@string/street_address_text"
+                android:layout_below="@id/street_register_tv"/>
+
+            <!--Error message-->
+            <TextView
+                android:id="@+id/street_register_error_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/error_warning"
+                android:visibility="gone"
+                android:layout_below="@id/street_register_edt"/>
+
+            <!--City Address-->
+            <TextView
+                android:autofillHints="postalAddress"
+                android:id="@+id/city_register_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/city_text"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:layout_marginTop="20dp"
+                android:layout_below="@id/street_register_edt"/>
+
+            <EditText
+                android:id="@+id/city_register_edt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/city_text"
+                android:layout_below="@id/city_register_tv"/>
+
+            <!--Error message-->
+            <TextView
+                android:id="@+id/city_register_error_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/error_warning"
+                android:visibility="gone"
+                android:layout_below="@id/city_register_edt"/>
+
+            <!--Country Address-->
+            <TextView
+                android:id="@+id/country_register_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/country_text"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:layout_marginTop="20dp"
+                android:layout_below="@id/city_register_edt"/>
+
+            <EditText
+                android:id="@+id/country_register_edt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/country_text"
+                android:inputType="text"
+                android:layout_below="@id/country_register_tv"/>
+
+            <!--Error message-->
+            <TextView
+                android:id="@+id/country_register_error_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/error_warning"
+                android:visibility="gone"
+                android:layout_below="@id/country_register_edt"/>
+
+            <!--Postal Code Address-->
+            <TextView
+                android:id="@+id/postalcode_register_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/postal_code_text"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:layout_marginTop="20dp"
+                android:layout_below="@id/country_register_edt"/>
+
+            <EditText
+                android:autofillHints="postalCode"
+                android:id="@+id/postalcode_register_edt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:hint="@string/postal_code_text"
+                android:layout_below="@id/postalcode_register_tv"/>
+
+            <!--Error message-->
+            <TextView
+                android:id="@+id/postalcode_register_error_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/error_warning"
+                android:visibility="gone"
+                android:layout_below="@id/postalcode_register_edt"/>
+
+            <!--Password-->
+            <TextView
+                android:id="@+id/password_register_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/password_login"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:layout_below="@id/postalcode_register_edt"
+                android:layout_marginTop="20dp"/>
+
+            <EditText
+                android:autofillHints="password"
+                android:id="@+id/password_register_edt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/password_login"
+                android:inputType="textPassword"
+                android:layout_below="@id/password_register_tv"/>
+
+            <!--Error message-->
+            <TextView
+                android:id="@+id/password_register_error_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/error_warning"
+                android:visibility="gone"
+                android:layout_below="@id/password_register_edt"/>
+
+            <!--Role-->
+            <TextView
+                android:id="@+id/role_register_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/role_text"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:layout_below="@id/password_register_edt"
+                android:layout_marginTop="20dp"/>
+
+            <EditText
+                android:id="@+id/role_register_edt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="none"
+                android:hint="@string/role_text"
+                android:layout_below="@id/role_register_tv"
+                />
+
+            <!--Error message-->
+            <TextView
+                android:id="@+id/role_register_error_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/error_warning"
+                android:visibility="gone"
+                android:layout_below="@id/role_register_edt"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_marginTop="20dp"
+                android:layout_below="@id/role_register_edt">
+
+                <Button
+                    android:id="@+id/register_btn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/register_text"
+                    android:textStyle="bold"
+                    android:layout_marginStart="50dp"
+                    android:layout_marginEnd="50dp"/>
+
+                <TextView
+                    android:id="@+id/have_account_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/already_have_account"
+                    android:gravity="center_vertical"
+                    />
+
+            </LinearLayout>
+        </RelativeLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

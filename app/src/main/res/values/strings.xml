@@ -1,0 +1,62 @@
+<resources>
+    <string name="app_name">Fall Detection System</string>
+    <string name="fall_detection_system">Fall Detection System</string>
+    <string name="made_by">Made by: Muhammad Yusril Hasriansyah</string>
+    <string name="subscribe">Subscribe</string>
+    <string name="unsubscribe">Unsubscribe</string>
+    <string name="pilih_kategori">Pilih Kategori</string>
+    <string name="keluarga">Keluarga</string>
+    <string name="tenaga_kesehatan">Tenaga Kesehatan</string>
+    <string name="back_arrow_description">Back Arrow</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="telepon_darurat_text">Telepon Rumah Sakit/Ambulan</string>
+    <string name="password_login">Password</string>
+    <string name="username_login">Username</string>
+    <string name="username_register">Username</string>
+    <string name="patient_name_register">Patient Name</string>
+    <string name="already_have_account">Already have account? Login</string>
+    <string name="do_not_have_account">Do not have account? Click here</string>
+    <string name="halaman_beranda">Halaman Beranda</string>
+    <string name="monitoring_field">Monitoring Field</string>
+    <string name="fall_detection">Fall Detection</string>
+    <string name="nama_wali">Nama Wali: Leon Bartford</string>
+    <string name="nama_pasien">Nama Pasien: John Doe</string>
+    <string name="kondisi_pasien">Kondisi Pasien: Beraktivitas normal</string>
+    <string name="lokasi_pengguna">Lokasi pengguna:</string>
+    <string name="alamat_pengguna">Gumeno, Gresik, Indonesia</string>
+    <string name="nama_keluarga">Nama Keluarga:</string>
+    <string name="item_user_name_value">Johnny</string>
+    <string name="nama_pasien_empty">Nama Pasien:</string>
+    <string name="item_patient_name_value">Garry</string>
+    <string name="alamat_pasien_empty">Alamat Pasien:</string>
+    <string name="item_alamat_pasien_value">Soekarno-Hatta, Malang, \nIndonesia, 65141</string>
+    <string name="human_fall_icon">Human Fall Icon</string>
+    <string name="back_arrow">Back Arrow</string>
+    <string name="please_enter_password">Please enter password!</string>
+    <string name="enter_username_please">Please enter username!</string>
+    <string name="login_text">Login</string>
+    <string name="register_text">Register</string>
+    <string name="error_warning">Error</string>
+    <string name="street_address_text">Street Address</string>
+    <string name="city_text">City</string>
+    <string name="country_text">Country</string>
+    <string name="postal_code_text">Postal Code</string>
+    <string name="role_text">Role</string>
+    <string name="daftar_pasien_text">Daftar Pasien</string>
+    <string name="medic_name">Nama : RSUD Bromo</string>
+    <string name="medic_address">Alamat : Soekarno-Hatta, Malang, Indonesia, 65141</string>
+    <string name="no_patient_text">NoPatient</string>
+    <string name="username_must_not_empty">Username must not empty!</string>
+    <string name="patient_name_must_not_empty">Patient name must not empty!</string>
+    <string name="password_must_not_empty">Password must not empty!</string>
+    <string name="street_address_must_not_empty">Street address must not empty!</string>
+    <string name="city_must_not_empty">City must not empty!</string>
+    <string name="country_must_not_empty">Country must not empty!</string>
+    <string name="postal_code_must_not_empty">Postal code must not empty!</string>
+
+    <string-array name="category_array">
+        <item>Keluarga</item>
+        <item>Medis</item>
+    </string-array>
+</resources>

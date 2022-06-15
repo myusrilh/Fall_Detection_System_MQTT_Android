@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Project Android/FallDetectionSystem/app/src/main/res/drawable/bg_button_connect.xml" value="0.219" />
+        <entry key="..\:/Project Android/FallDetectionSystem/app/src/main/res/drawable/bg_button_custom_action_bar.xml" value="0.219" />
+        <entry key="..\:/Project Android/FallDetectionSystem/app/src/main/res/drawable/bg_button_disabled.xml" value="0.219" />
+        <entry key="..\:/Project Android/FallDetectionSystem/app/src/main/res/drawable/bg_button_disconnect.xml" value="0.219" />
+        <entry key="..\:/Project Android/FallDetectionSystem/app/src/main/res/drawable/bg_button_emergency_call.xml" value="0.219" />
+        <entry key="..\:/Project Android/FallDetectionSystem/app/src/main/res/drawable/bg_button_keluarga_category.xml" value="0.219" />
+        <entry key="..\:/Project Android/FallDetectionSystem/app/src/main/res/drawable/bg_button_tenaga_kesehatan_category.xml" value="0.219" />
+        <entry key="..\:/Project Android/FallDetectionSystem/app/src/main/res/drawable/bg_button_to_home.xml" value="0.219" />
+        <entry key="..\:/Project Android/FallDetectionSystem/app/src/main/res/drawable/bg_button_vategory_disabled.xml" value="0.219" />
+        <entry key="..\:/Project Android/FallDetectionSystem/app/src/main/res/drawable/bg_custom_action_bar.xml" value="0.219" />
+        <entry key="..\:/Project Android/FallDetectionSystem/app/src/main/res/drawable/bg_fall_monitoring.xml" value="0.219" />
+        <entry key="..\:/Project Android/FallDetectionSystem/app/src/main/res/drawable/bg_textview_monitoring_field_text.xml" value="0.219" />
+        <entry key="..\:/Project Android/FallDetectionSystem/app/src/main/res/drawable/ic_back_arrow.xml" value="0.219" />
+        <entry key="..\:/Project Android/FallDetectionSystem/app/src/main/res/drawable/ic_monitoring_field_bg.xml" value="0.219" />
+        <entry key="..\:/Project Android/FallDetectionSystem/app/src/main/res/drawable/ic_top_bg_action_bar.xml" value="0.219" />
+        <entry key="..\:/Project Android/FallDetectionSystem/app/src/main/res/layout/activity_choose_category.xml" value="0.22" />
+        <entry key="..\:/Project Android/FallDetectionSystem/app/src/main/res/layout/activity_connect_mqttactivity.xml" value="0.6173228346456693" />
+        <entry key="..\:/Project Android/FallDetectionSystem/app/src/main/res/layout/activity_first.xml" value="0.2125" />
+        <entry key="..\:/Project Android/FallDetectionSystem/app/src/main/res/layout/activity_history_adapter.xml" value="0.1" />
+        <entry key="..\:/Project Android/FallDetectionSystem/app/src/main/res/layout/activity_home.xml" value="0.22" />
+        <entry key="..\:/Project Android/FallDetectionSystem/app/src/main/res/layout/activity_item_patient_recycler.xml" value="0.25" />
+        <entry key="..\:/Project Android/FallDetectionSystem/app/src/main/res/layout/activity_login.xml" value="0.25" />
+        <entry key="..\:/Project Android/FallDetectionSystem/app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="..\:/Project Android/FallDetectionSystem/app/src/main/res/layout/activity_patient_list.xml" value="0.23651452282157676" />
+        <entry key="..\:/Project Android/FallDetectionSystem/app/src/main/res/layout/activity_register.xml" value="0.22" />
+        <entry key="..\:/Project Android/FallDetectionSystem/app/src/main/res/layout/connect_page_custom_action_bar.xml" value="0.2125" />
+        <entry key="..\:/Project Android/FallDetectionSystem/app/src/main/res/layout/fragment_choose_category.xml" value="0.2125" />
+        <entry key="..\:/Project Android/FallDetectionSystem/app/src/main/res/layout/fragment_home.xml" value="0.17753623188405798" />
+        <entry key="..\:/Project Android/FallDetectionSystem/app/src/main/res/layout/home_page_custom_action_bar.xml" value="0.24817518248175183" />
+        <entry key="..\:/Project Android/FallDetectionSystem/app/src/main/res/xml/network_security_config.xml" value="0.1" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>
