@@ -83,6 +83,12 @@ public class Request {
             StringBuilder jsonResult = new StringBuilder();
             StringBuilder sb = new StringBuilder(QUERY);
             sb.append("format=json&");
+
+            double lat = 30.0;
+            double lon = 30.0;
+
+            Location loc = null;
+
             for (ArrayList<Pair> pairs : parameters) {
                 Log.d("size=" + pairs.size(), "arraylist found");
                 for (Pair p : pairs) {
@@ -100,10 +106,7 @@ public class Request {
                         jsonResult.append(lineIn);
                     }
 
-                    JSONObject jsonObj;
                     try {
-                        double lat = 0.0;
-                        double lon = 0.0;
                         JSONArray jsonArray = new JSONArray(jsonResult.toString());
                         int length = jsonArray.length();
                         if (length > 0) {
@@ -126,47 +129,45 @@ public class Request {
                                 float importance = (float) jsonObject.optDouble("importance");
                                 String[] split = display_name.split(",");
                             }
-                        } else {
-                            lat = 30.0;
-                            lon = 30.0;
                         }
 
-                        Location loc = new Location(lat, lon);
+                        loc = new Location(lat, lon);
                         String lonlat = loc.getLongitude() + "+" + loc.getLatitude();
                         Log.d("Location", lonlat);
+
                         return loc;
 //                            publishProgress(new Address(split[0]+","+split[1], R.mipmap.ic_launcher, lat, lon));
-
-
                     } catch (JSONException e) {
                         // TODO Auto-generated catch block
-                        e.printStackTrace();
+                        Log.d("Error Json Background",e.toString());
                     }
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    Log.d("Error IO Background",e.toString());
                 }
 
             }
-
-
-            return null;
+            return loc;
         }
 
 
         @Override
         protected void onPostExecute(Location loc) {
             super.onPostExecute(loc);
-            IMapController mapController = map.getController();
-            mapController.setZoom(18.0);
-            GeoPoint startPoint = new GeoPoint(loc.getLatitude(), loc.getLongitude());
-            mapController.setCenter(startPoint);
+            try{
+                IMapController mapController = map.getController();
+                mapController.setZoom(18.0);
+                GeoPoint startPoint = new GeoPoint(loc.getLatitude(), loc.getLongitude());
+                mapController.setCenter(startPoint);
 
-            Marker startMarker = new Marker(map);
-            startMarker.setPosition(startPoint);
-            startMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
-            startMarker.setTitle(user.getStreet()+", "+user.getCity()+"\n"+user.getCountry()+", "+user.getPostalCode());
-            startMarker.setDraggable(true);
-            map.getOverlays().add(startMarker);
+                Marker startMarker = new Marker(map);
+                startMarker.setPosition(startPoint);
+                startMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
+                startMarker.setTitle(user.getStreet()+", "+user.getCity()+"\n"+user.getCountry()+", "+user.getPostalCode());
+                startMarker.setDraggable(true);
+                map.getOverlays().add(startMarker);
+            }catch(Exception e){
+                Log.d("Exception post execute",e.toString());
+            }
         }
 
     }

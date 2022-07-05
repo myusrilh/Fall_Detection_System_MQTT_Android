@@ -227,6 +227,61 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     }
 
+    public User getUserRole(String patientName) {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        // Define a projection that specifies which columns from the database
+        // you will actually use after this query.
+        String[] columns = {
+                COLUMN_USER_ID,
+                COLUMN_USER_NAME,
+                COLUMN_USER_PATIENT_NAME,
+                COLUMN_USER_PASSWORD,
+                COLUMN_USER_STREET,
+                COLUMN_USER_CITY,
+                COLUMN_USER_COUNTRY,
+                COLUMN_USER_POSTAL_CODE,
+                COLUMN_USER_ROLE
+        };
+
+        String selection = COLUMN_USER_PATIENT_NAME + " = ?";
+        String[] selectionArgs = {patientName};
+
+        User user = new User();
+
+        Cursor cursor = db.query(
+                TABLE_USER,
+                columns,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                null
+        );
+//        int cursorCount = cursor.getCount();
+
+        // Traversing through all rows and adding to list
+        if (cursor.moveToFirst()) {
+            do {
+                user.setId(Integer.parseInt(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_USER_ID))));
+                user.setName(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_USER_NAME)));
+                user.setPatientname(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_USER_PATIENT_NAME)));
+                user.setStreet(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_USER_STREET)));
+                user.setCity(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_USER_CITY)));
+                user.setCountry(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_USER_COUNTRY)));
+                user.setPostalCode(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_USER_POSTAL_CODE)));
+                user.setPassword(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_USER_PASSWORD)));
+                user.setRole(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_USER_ROLE)));
+            } while (cursor.moveToNext());
+        } else {
+            return null;
+        }
+        cursor.close();
+        db.close();
+        return user;
+
+    }
+
     /**
      * This method to check user exist or not
      *
