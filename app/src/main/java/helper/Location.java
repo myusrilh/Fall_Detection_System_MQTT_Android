@@ -23,6 +23,7 @@ public class Location {
 
     private double latitude;
     private double longitude;
+    private String address;
 
 
     public Location(double latitude, double longitude) {
@@ -30,7 +31,21 @@ public class Location {
         this.longitude = longitude;
     }
 
+    public Location(double latitude, double longitude, String address) {
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.address = address;
+    }
+
     public Location() {
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public double getLatitude() {
@@ -48,4 +63,6 @@ public class Location {
     public void setLongitude(double longitude) {
         this.longitude = longitude;
     }
+
+
 }

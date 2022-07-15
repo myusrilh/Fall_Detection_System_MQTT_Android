@@ -35,18 +35,22 @@ public class Request {
 
     private static MapView map = null;
     private static User user = null;
+    private static Location location = null;
+    private static double latitude = 0.0;
+    private static double longitude = 0.0;
 
-    public static void getPlaces(Action a, MapView m, User u, ArrayList<Pair>... parameters) {
+    public static void getPlaces(Action a, MapView m, User u, Location l, ArrayList<Pair> parameters) {
         try {
             new GetPlaces(a, parameters).execute();
             map = m;
             user = u;
+            location = l;
             Log.d("getPlaces", "getPlaces");
         } catch (IllegalStateException e) {
             Log.e(e.getMessage(), "exception");
         }
-
     }
+
 
     private static class GetPlaces extends AsyncTask<Pair, Pair, Location> {
 
@@ -63,7 +67,10 @@ public class Request {
         use q= if you don't know whether the user type an address, a city a county or whatever
     */
 
-        private final String QUERY = "https://nominatim.openstreetmap.org//search?";
+//        private final String QUERY = "https://nominatim.openstreetmap.org//search?";
+//        private final String QUERY = "https://nominatim.openstreetmap.org//reverse?";
+        private String QUERY = "";
+
         private Action action;
         private ArrayList<Pair>[] parameters;
         String display_name="";
@@ -80,6 +87,12 @@ public class Request {
 
         @Override
         protected Location doInBackground(Pair... params) {
+            if(location.getAddress() != null){
+                QUERY = "https://nominatim.openstreetmap.org//reverse?";
+            }else{
+                QUERY = "https://nominatim.openstreetmap.org//search?";
+            }
+
             StringBuilder jsonResult = new StringBuilder();
             StringBuilder sb = new StringBuilder(QUERY);
             sb.append("format=json&");
@@ -87,13 +100,16 @@ public class Request {
             double lat = 30.0;
             double lon = 30.0;
 
-            Location loc = null;
-
             for (ArrayList<Pair> pairs : parameters) {
                 Log.d("size=" + pairs.size(), "arraylist found");
                 for (Pair p : pairs) {
-                    sb.append(p.first + "=" + p.second + "&");
-                    Log.d("p.first=" + p.first + " & o.second" + p.second, "pairs");
+//                    if(p.third != null && p.fourth != null){
+//                        sb.append(p.first + "=" + p.second + "&" + p.third + "=" + p.fourth);
+//                        Log.d(p.first + "+" + p.second + "+" + p.third + "+" + p.fourth, "pairs");
+//                    }else{
+                        sb.append(p.first + "=" + p.second + "&");
+                        Log.d("p.first=" + p.first + " & p.second" + p.second, "pairs");
+//                    }
                 }
                 try {
                     URL url = new URL(sb.toString());
@@ -112,30 +128,29 @@ public class Request {
                         if (length > 0) {
                             for (int i = 0; i < length; i++) {
                                 JSONObject jsonObject = jsonArray.getJSONObject(i);
-                                long place_id = jsonObject.optLong("place_id");
-                                String license = jsonObject.optString("license");
-                                String osm_type = jsonObject.optString("osm_type");
-                                long osm_id = jsonObject.optLong("osm_id");
-                                JSONArray boundingArray = jsonObject.getJSONArray("boundingbox");
-                                BoundingBox boundingBox = new BoundingBox();
-                                for (int j = 0; i < boundingArray.length(); i++) {
-                                    boundingBox.setBound(i, boundingArray.optDouble(i));
-                                }
+//                                JSONArray boundingArray = jsonObject.getJSONArray("boundingbox");
+//                                BoundingBox boundingBox = new BoundingBox();
+//                                for (int j = 0; i < boundingArray.length(); i++) {
+//                                    boundingBox.setBound(i, boundingArray.optDouble(i));
+//                                }
                                 lat = jsonObject.getDouble("lat");
                                 lon = jsonObject.getDouble("lon");
                                 display_name = jsonObject.optString("display_name");
-                                String entityClass = jsonObject.optString("class");
-                                String type = jsonObject.optString("type");
-                                float importance = (float) jsonObject.optDouble("importance");
-                                String[] split = display_name.split(",");
+//                                String entityClass = jsonObject.optString("class");
+//                                String type = jsonObject.optString("type");
+//                                float importance = (float) jsonObject.optDouble("importance");
+//                                String[] split = display_name.split(",");
                             }
                         }
 
-                        loc = new Location(lat, lon);
-                        String lonlat = loc.getLongitude() + "+" + loc.getLatitude();
-                        Log.d("Location", lonlat);
+                        if (location.getLatitude() == 0.0 && location.getLongitude() == 0.0) {
+                            location = new Location(lat, lon);
+                            location.setAddress(display_name);
+                        }
+                        String latlon = location.getLatitude() + "+" + location.getLongitude();
+                        Log.d("Location", latlon);
 
-                        return loc;
+                        return location;
 //                            publishProgress(new Address(split[0]+","+split[1], R.mipmap.ic_launcher, lat, lon));
                     } catch (JSONException e) {
                         // TODO Auto-generated catch block
@@ -146,7 +161,7 @@ public class Request {
                 }
 
             }
-            return loc;
+            return location;
         }
 
 
@@ -156,13 +171,13 @@ public class Request {
             try{
                 IMapController mapController = map.getController();
                 mapController.setZoom(18.0);
-                GeoPoint startPoint = new GeoPoint(loc.getLatitude(), loc.getLongitude());
+                GeoPoint startPoint = new GeoPoint(location.getLatitude(), location.getLongitude());
                 mapController.setCenter(startPoint);
 
                 Marker startMarker = new Marker(map);
                 startMarker.setPosition(startPoint);
                 startMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
-                startMarker.setTitle(user.getStreet()+", "+user.getCity()+"\n"+user.getCountry()+", "+user.getPostalCode());
+                startMarker.setTitle(user.getStreet() + ", " + user.getCity() + "\n" + user.getCountry() + ", " + user.getPostalCode());
                 startMarker.setDraggable(true);
                 map.getOverlays().add(startMarker);
             }catch(Exception e){
