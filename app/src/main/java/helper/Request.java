@@ -1,8 +1,11 @@
 package helper;
 
+import android.app.Activity;
+import android.content.Context;
 import android.location.Address;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.TextView;
 
 import com.example.falldetectionsystem.R;
 
@@ -38,19 +41,20 @@ public class Request {
     private static Location location = null;
     private static double latitude = 0.0;
     private static double longitude = 0.0;
+    private static TextView patientAddressTv;
 
-    public static void getPlaces(Action a, MapView m, User u, Location l, ArrayList<Pair> parameters) {
+    public static void getPlaces(Action a, MapView m, User u, Location l, TextView t, ArrayList<Pair> parameters) {
         try {
             new GetPlaces(a, parameters).execute();
             map = m;
             user = u;
             location = l;
+            patientAddressTv = t;
             Log.d("getPlaces", "getPlaces");
         } catch (IllegalStateException e) {
             Log.e(e.getMessage(), "exception");
         }
     }
-
 
     private static class GetPlaces extends AsyncTask<Pair, Pair, Location> {
 
@@ -135,20 +139,18 @@ public class Request {
 //                                }
                                 lat = jsonObject.getDouble("lat");
                                 lon = jsonObject.getDouble("lon");
-                                display_name = jsonObject.optString("display_name");
-//                                String entityClass = jsonObject.optString("class");
-//                                String type = jsonObject.optString("type");
-//                                float importance = (float) jsonObject.optDouble("importance");
-//                                String[] split = display_name.split(",");
+                                display_name = jsonObject.getString("display_name");
                             }
                         }
 
-                        if (location.getLatitude() == 0.0 && location.getLongitude() == 0.0) {
+                        if (location.getLatitude() == 30.0 && location.getLongitude() == 30.0) {
                             location = new Location(lat, lon);
-                            location.setAddress(display_name);
+//                            location.setAddress(display_name);
                         }
+
                         String latlon = location.getLatitude() + "+" + location.getLongitude();
                         Log.d("Location", latlon);
+                        Log.d("DisplayName", display_name);
 
                         return location;
 //                            publishProgress(new Address(split[0]+","+split[1], R.mipmap.ic_launcher, lat, lon));
@@ -169,6 +171,8 @@ public class Request {
         protected void onPostExecute(Location loc) {
             super.onPostExecute(loc);
             try{
+                patientAddressTv.findViewById(R.id.patient_address_home_tv);
+
                 IMapController mapController = map.getController();
                 mapController.setZoom(18.0);
                 GeoPoint startPoint = new GeoPoint(location.getLatitude(), location.getLongitude());
@@ -177,7 +181,14 @@ public class Request {
                 Marker startMarker = new Marker(map);
                 startMarker.setPosition(startPoint);
                 startMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
-                startMarker.setTitle(user.getStreet() + ", " + user.getCity() + "\n" + user.getCountry() + ", " + user.getPostalCode());
+
+                String address = user.getStreet() + ", " + user.getCity() + "\n" + user.getCountry() + ", " + user.getPostalCode();
+                if(!display_name.isEmpty()){
+                    address = display_name;
+                }
+                startMarker.setTitle(address);
+                patientAddressTv.setText(address);
+
                 startMarker.setDraggable(true);
                 map.getOverlays().add(startMarker);
             }catch(Exception e){

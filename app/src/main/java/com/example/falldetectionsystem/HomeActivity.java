@@ -97,7 +97,6 @@ public class HomeActivity extends AppCompatActivity implements Action {
     boolean isRunning=false;
     Location loc;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -123,11 +122,12 @@ public class HomeActivity extends AppCompatActivity implements Action {
             }
 
         }
-        setUserInfo(user);
+
+        loc = new Location(latitude, longitude);
+        setUserInfo(user, loc);
 
         if (role.equalsIgnoreCase("Keluarga")) {
             emergencyCallBtn.setVisibility(View.VISIBLE);
-            emergencyCallBtn.setClickable(false);
         } else if (role.equalsIgnoreCase("Medis")) {
             emergencyCallBtn.setVisibility(View.GONE);
         }
@@ -156,9 +156,7 @@ public class HomeActivity extends AppCompatActivity implements Action {
         map = findViewById(R.id.map);
         map.setMultiTouchControls(true);
 
-        loc = new Location(latitude, longitude);
-
-        setMapsLocation(user, map, loc);
+        setMapsLocation(user, map, loc, patientAddressTv);
         startMqtt();
 
     }
@@ -324,7 +322,7 @@ public class HomeActivity extends AppCompatActivity implements Action {
                     longTemp = longitude;
 
                     loc = new Location(latitude, longitude);
-                    setMapsLocation(user, map, loc);
+                    setMapsLocation(user, map, loc, patientAddressTv);
                 }
 
                 Log.w("lat-lon-MQTT", latTemp+","+longTemp);
@@ -404,7 +402,7 @@ public class HomeActivity extends AppCompatActivity implements Action {
     }
 
 
-    private void setUserInfo(User user){
+    private void setUserInfo(User user, Location loc){
         String username = "Nama Wali: "+user.getName();
         String patientName = "Nama Pasien: "+user.getPatientname();
         String address = user.getStreet()+", "+user.getCity()+", "+user.getCountry()+", "+user.getPostalCode();
@@ -415,7 +413,7 @@ public class HomeActivity extends AppCompatActivity implements Action {
     }
 
 
-    private void setMapsLocation(User user, MapView map, Location loc){
+    private void setMapsLocation(User user, MapView map, Location loc, TextView patAdd){
 
         if(user.getStreet().contains(" ")) {
             String[] us = user.getStreet().split(" ");
@@ -425,13 +423,14 @@ public class HomeActivity extends AppCompatActivity implements Action {
             }
             user.setStreet(usr.toString());
         }
-        Toast.makeText(getApplicationContext(),"Alamat: "+user.getStreet(),Toast.LENGTH_LONG).show();
 
         String address = user.getStreet()+"+"+user.getCity()+"+"+user.getCountry();
+
         Request.getPlaces(e -> Toast.makeText(HomeActivity.this, e.toString(), Toast.LENGTH_SHORT).show()
                 , map
                 , user
                 , loc
+                , patAdd
                 , new ArrayList<Pair>(){
                     {
                         Pair p = new Pair("q",address);
