@@ -44,15 +44,8 @@ public class Pair implements Comparable<Pair> {
         if (this == obj)
             return true;
 
-//        if (third != null && fourth != null) {
-//            return equal(first, ((Pair) obj).first)
-//                    && equal(second, ((Pair) obj).second)
-//                    && equal(third, ((Pair) obj).third)
-//                    && equal(fourth, ((Pair) obj).fourth);
-//        }else{
             return equal(first, ((Pair) obj).first)
                     && equal(second, ((Pair) obj).second);
-//        }
     }
 
     // todo move this to a helper class.
@@ -63,10 +56,6 @@ public class Pair implements Comparable<Pair> {
     @NonNull
     @Override
     public String toString() {
-//        if (third != null && fourth != null) {
-//            return "(" + first + ", " + second +", "+ third + ", " + fourth + ')';
-//        }else{
             return "(" + first + ", " + second + ')';
-//        }
     }
 }
