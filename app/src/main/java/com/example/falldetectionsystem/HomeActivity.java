@@ -87,11 +87,10 @@ public class HomeActivity extends AppCompatActivity implements Action {
     int countPosisiLantai = 0;
     boolean jatuh = false;
     boolean posisiLantai = false;
-    double latitude = 30.0;
-    double longitude = 30.0;
+    double latitude = -30000.0;
+    double longitude = -30000.0;
     double latTemp = -100000;
     double longTemp = -100000;
-//    long start=0, end=0;
 
     Thread t;
     boolean isRunning=false;
@@ -124,7 +123,7 @@ public class HomeActivity extends AppCompatActivity implements Action {
         }
 
         loc = new Location(latitude, longitude);
-        setUserInfo(user, loc);
+        setUserInfo(user);
 
         if (role.equalsIgnoreCase("Keluarga")) {
             emergencyCallBtn.setVisibility(View.VISIBLE);
@@ -214,19 +213,21 @@ public class HomeActivity extends AppCompatActivity implements Action {
 //        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
 
         String place = user.getStreet()+"+"+user.getCity()+"+"+user.getCountry()+"+"+user.getPostalCode();
-//        Uri gmmIntentUri = Uri.parse("google.navigation:q="+place);
-        Uri gmmIntentUri = Uri.parse("geo:"+loc.getLatitude()+","+loc.getLongitude());
+        Uri gmmIntentUri = Uri.parse("google.navigation:q="+place);
+
+        if(loc.getLatitude() != -100000 && loc.getLongitude() != -100000){
+            gmmIntentUri = Uri.parse("google.navigation:q=" + loc.getLatitude() + "," + loc.getLongitude());
+        }
+
         Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
         mapIntent.setPackage("com.google.android.apps.maps");
         mapIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//        this.startActivity(mapIntent);
 
         PendingIntent pendingIntent;
         PendingIntent mapPendingIntent;
 
         pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE);
         mapPendingIntent = PendingIntent.getActivity(this, 0, mapIntent, PendingIntent.FLAG_IMMUTABLE);
-
 
         Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
@@ -267,8 +268,6 @@ public class HomeActivity extends AppCompatActivity implements Action {
                 try {
                     Thread.sleep(1000);
                     countPosisiLantai++;
-
-//                    Log.d("Thread run", "Second: "+Thread.activeCount());
                     Log.d("Thread run", "Second: "+countPosisiLantai);
                 } catch (InterruptedException e) {
                     Log.e("Thread run",e.getMessage().toString());
@@ -342,7 +341,6 @@ public class HomeActivity extends AppCompatActivity implements Action {
 
                     kondisi = "Beraktivitas normal";
                     stopCountPostFall(t);
-                    emergencyCallBtn.setClickable(false);
 
                 }else if(prediction == 2){
                     posisiLantai = true;
@@ -366,7 +364,6 @@ public class HomeActivity extends AppCompatActivity implements Action {
                                 message += kondisi;
                                 patientConditionTv.setTextColor(Color.RED);
                                 patientConditionTv.setText(message);
-                                emergencyCallBtn.setClickable(true);
                             }
 
                         }else if(countPosisiLantai > 700){
@@ -402,7 +399,7 @@ public class HomeActivity extends AppCompatActivity implements Action {
     }
 
 
-    private void setUserInfo(User user, Location loc){
+    private void setUserInfo(User user){
         String username = "Nama Wali: "+user.getName();
         String patientName = "Nama Pasien: "+user.getPatientname();
         String address = user.getStreet()+", "+user.getCity()+", "+user.getCountry()+", "+user.getPostalCode();
@@ -426,17 +423,35 @@ public class HomeActivity extends AppCompatActivity implements Action {
 
         String address = user.getStreet()+"+"+user.getCity()+"+"+user.getCountry();
 
-        Request.getPlaces(e -> Toast.makeText(HomeActivity.this, e.toString(), Toast.LENGTH_SHORT).show()
-                , map
-                , user
-                , loc
-                , patAdd
-                , new ArrayList<Pair>(){
-                    {
-                        Pair p = new Pair("q",address);
-                        add(p);
-                    }
-                });
+        if(loc.getLatitude() == -30000.0 && loc.getLongitude() == -30000.0) {
+            Request.getPlaces(e -> Toast.makeText(HomeActivity.this, e.toString(), Toast.LENGTH_SHORT).show()
+                    , map
+                    , user
+                    , loc
+                    , patAdd
+                    , new ArrayList<Pair>() {
+                        {
+                            Pair p = new Pair("q", address);
+                            add(p);
+                        }
+                    });
+        }else{
+
+            ArrayList<Pair> arrayList = new ArrayList<Pair>();
+            Pair p = new Pair("lat", String.valueOf(loc.getLatitude()));
+            Pair p2 = new Pair("lon", String.valueOf(loc.getLongitude()));
+
+            arrayList.add(p);
+            arrayList.add(p2);
+
+            Request.getPlaces(e -> Toast.makeText(HomeActivity.this, e.toString(), Toast.LENGTH_SHORT).show()
+                    , map
+                    , user
+                    , loc
+                    , patAdd
+                    , arrayList
+                    );
+        }
 
     }
 

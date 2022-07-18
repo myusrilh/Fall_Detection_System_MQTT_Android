@@ -12,6 +12,7 @@ import com.example.falldetectionsystem.R;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.json.JSONTokener;
 import org.osmdroid.api.IMapController;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
@@ -39,8 +40,6 @@ public class Request {
     private static MapView map = null;
     private static User user = null;
     private static Location location = null;
-    private static double latitude = 0.0;
-    private static double longitude = 0.0;
     private static TextView patientAddressTv;
 
     public static void getPlaces(Action a, MapView m, User u, Location l, TextView t, ArrayList<Pair> parameters) {
@@ -71,13 +70,13 @@ public class Request {
         use q= if you don't know whether the user type an address, a city a county or whatever
     */
 
-//        private final String QUERY = "https://nominatim.openstreetmap.org//search?";
-//        private final String QUERY = "https://nominatim.openstreetmap.org//reverse?";
         private String QUERY = "";
 
         private Action action;
         private ArrayList<Pair>[] parameters;
         String display_name="";
+        double lat = -100000;
+        double lon = -100000;
 
         /**
          * @param action     The method to apply on each Place which is returned by nominatim
@@ -91,7 +90,7 @@ public class Request {
 
         @Override
         protected Location doInBackground(Pair... params) {
-            if(location.getAddress() != null){
+            if(location.getLatitude() != -30000.0 && location.getLongitude() != -30000.0){
                 QUERY = "https://nominatim.openstreetmap.org//reverse?";
             }else{
                 QUERY = "https://nominatim.openstreetmap.org//search?";
@@ -99,21 +98,13 @@ public class Request {
 
             StringBuilder jsonResult = new StringBuilder();
             StringBuilder sb = new StringBuilder(QUERY);
-            sb.append("format=json&");
-
-            double lat = 30.0;
-            double lon = 30.0;
+            sb.append("format=json&limit=1&");
 
             for (ArrayList<Pair> pairs : parameters) {
                 Log.d("size=" + pairs.size(), "arraylist found");
                 for (Pair p : pairs) {
-//                    if(p.third != null && p.fourth != null){
-//                        sb.append(p.first + "=" + p.second + "&" + p.third + "=" + p.fourth);
-//                        Log.d(p.first + "+" + p.second + "+" + p.third + "+" + p.fourth, "pairs");
-//                    }else{
-                        sb.append(p.first + "=" + p.second + "&");
-                        Log.d("p.first=" + p.first + " & p.second" + p.second, "pairs");
-//                    }
+                    sb.append(p.first + "=" + p.second + "&");
+                    Log.d("p.first=" + p.first + " & p.second=" + p.second, "pairs");
                 }
                 try {
                     URL url = new URL(sb.toString());
@@ -126,27 +117,43 @@ public class Request {
                         jsonResult.append(lineIn);
                     }
 
+                    String result = jsonResult.toString().replace("Value ","");
+                    Log.d("JSON Result",result);
+
                     try {
-                        JSONArray jsonArray = new JSONArray(jsonResult.toString());
-                        int length = jsonArray.length();
-                        if (length > 0) {
-                            for (int i = 0; i < length; i++) {
-                                JSONObject jsonObject = jsonArray.getJSONObject(i);
-//                                JSONArray boundingArray = jsonObject.getJSONArray("boundingbox");
-//                                BoundingBox boundingBox = new BoundingBox();
-//                                for (int j = 0; i < boundingArray.length(); i++) {
-//                                    boundingBox.setBound(i, boundingArray.optDouble(i));
-//                                }
+                        Object json = new JSONTokener(result).nextValue();
+                        if (json instanceof JSONObject){
+                            //you have an object
+                            JSONObject jsonObject = new JSONObject(result);
+                            if(!jsonObject.has("error")){
                                 lat = jsonObject.getDouble("lat");
                                 lon = jsonObject.getDouble("lon");
                                 display_name = jsonObject.getString("display_name");
+                            }else{
+                                lat = -30.0;
+                                lon = -30.0;
+                                display_name = "Alamat tidak terdaftar";
+                            }
+                        }else if (json instanceof JSONArray){
+                            //you have an array
+                            JSONArray jsonArray = new JSONArray(result);
+                            int length = jsonArray.length();
+                            if (length > 0) {
+                                JSONObject jsonObject = jsonArray.getJSONObject(0);
+                                if(!jsonObject.has("error")){
+                                    lat = jsonObject.getDouble("lat");
+                                    lon = jsonObject.getDouble("lon");
+                                    display_name = jsonObject.getString("display_name");
+                                }else{
+                                    lat = -30.0;
+                                    lon = -30.0;
+                                    display_name = "Alamat tidak terdaftar";
+                                }
                             }
                         }
 
-                        if (location.getLatitude() == 30.0 && location.getLongitude() == 30.0) {
-                            location = new Location(lat, lon);
-//                            location.setAddress(display_name);
-                        }
+                        location.setLatitude(lat);
+                        location.setLongitude(lon);
 
                         String latlon = location.getLatitude() + "+" + location.getLongitude();
                         Log.d("Location", latlon);
@@ -183,7 +190,7 @@ public class Request {
                 startMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
 
                 String address = user.getStreet() + ", " + user.getCity() + "\n" + user.getCountry() + ", " + user.getPostalCode();
-                if(!display_name.isEmpty()){
+                if(!display_name.contains("tidak ada")){
                     address = display_name;
                 }
                 startMarker.setTitle(address);

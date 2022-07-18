@@ -21,9 +21,8 @@ import java.util.ArrayList;
 
 public class Location {
 
-    private double latitude;
-    private double longitude;
-    private String address;
+    private double latitude = -100000;
+    private double longitude = -100000;
 
 
     public Location(double latitude, double longitude) {
@@ -31,21 +30,7 @@ public class Location {
         this.longitude = longitude;
     }
 
-    public Location(double latitude, double longitude, String address) {
-        this.latitude = latitude;
-        this.longitude = longitude;
-        this.address = address;
-    }
-
     public Location() {
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
     }
 
     public double getLatitude() {

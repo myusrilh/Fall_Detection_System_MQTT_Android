@@ -9,15 +9,6 @@ public class Pair implements Comparable<Pair> {
 
     public final String first;
     public final String second;
-//    public String third;
-//    public String fourth;
-//
-//    public Pair(String first, String second, String third, String fourth) {
-//        this.first = first;
-//        this.second = second;
-//        this.third = third;
-//        this.fourth = fourth;
-//    }
 
     public Pair(String first, String second) {
         this.first = first;
@@ -38,11 +29,7 @@ public class Pair implements Comparable<Pair> {
 
     @Override
     public int hashCode() {
-//        if (third != null && fourth != null) {
-//            return 31 * hashcode(first) + hashcode(second) + hashcode(third) + hashcode(fourth);
-//        }else{
-            return 31 * hashcode(first) + hashcode(second);
-//        }
+        return 31 * hashcode(first) + hashcode(second);
     }
 
     // todo move this to a helper class.

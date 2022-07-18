@@ -159,10 +159,10 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/map"
             android:fontFamily="@font/roboto_medium"
+            android:lines="4"
             android:text="@string/alamat_pengguna"
             android:textColor="@android:color/black"
-            android:textSize="14sp"
-            android:maxLines="1"/>
+            android:textSize="14sp" />
 
 
     </RelativeLayout>
