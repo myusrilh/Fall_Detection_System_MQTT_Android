@@ -215,8 +215,8 @@ public class HomeActivity extends AppCompatActivity implements Action {
         String place = user.getStreet()+"+"+user.getCity()+"+"+user.getCountry()+"+"+user.getPostalCode();
         Uri gmmIntentUri = Uri.parse("google.navigation:q="+place);
 
-        if(loc.getLatitude() != -100000 && loc.getLongitude() != -100000){
-            gmmIntentUri = Uri.parse("google.navigation:q=" + loc.getLatitude() + "," + loc.getLongitude());
+        if(loc.getLatitude() != -30000.0 && loc.getLongitude() != -30000.0){
+            gmmIntentUri = Uri.parse("google.navigation:q=" + loc.getLatitude() + ", " + loc.getLongitude());
         }
 
         Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
